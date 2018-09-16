@@ -162,10 +162,9 @@ export default {
     },
     methods:{
         dosomething(index){
-            // console.log(index)
+            console.log(index);
         }
     }
-
 }
 </script>
 <style lang="scss" scoped>

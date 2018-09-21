@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VResource from "vue-resource";
-import App from './App';
 import router from './router';
 import Layout from './components/layout';
 

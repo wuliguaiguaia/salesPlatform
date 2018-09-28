@@ -17,7 +17,6 @@
 export default {
     computed:{
         productIcon(){
-            console.log('das');
             return this.imgMap[this.$route.path];
         }
     },

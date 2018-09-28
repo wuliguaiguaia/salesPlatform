@@ -15,7 +15,7 @@ const portfinder = require('portfinder');
 const express = require("express"); //node.js的内置框架
 const app = express();//请求server
 let apiRoutes = express.Router(); //express框架的router函数
-let appData =require('./db.json');//加载本地数据文件
+let appData = require('./db.json');//加载本地数据文件
 let NewsList = appData.getNewsList;//获取对应的本地数据并赋值给变量
 let login = appData.login;//获取对应的本地数据并赋值给变量
 let order = appData.createOrder;//获取对应的本地数据并赋值给变量
@@ -72,7 +72,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           data:NewsList,
         })
       }),//接口返回json数据，上面配置的数据NewsList就赋值给data请求后调用
-      app.get('/api/login',(req,res) =>{
+      app.get('api/login',(req,res) =>{
         res.json({
           errno:0,
           data:login,

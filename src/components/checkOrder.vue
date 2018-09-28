@@ -1,20 +1,19 @@
 <template>
     <div class="check-order">
-        <myDialog :isShow="isShowCheckOrder"  @oncloseDialog="closeDialog">
+        <Dialog :isShow="isShowCheckOrder"  @oncloseDialog="closeDialog">
             <span class="orderConfirm">请确定你的订单状态?</span>
             <button @click="checkStatus">支付成功</button>
             <button @click="checkDefeatStatus">支付失败</button>
-        </myDialog>
-        <myDialog :isShow="isShowSuccessDialog" @oncloseDialog="closeSuccessDialog">
+        </Dialog>
+        <Dialog :isShow="isShowSuccessDialog" @oncloseDialog="closeSuccessDialog">
             <span>购买成功！</span>
-        </myDialog>
-        <myDialog :isShow="isShowDefeatDialog" @oncloseDialog="closeDialog">
+        </Dialog>
+        <Dialog :isShow="isShowDefeatDialog" @oncloseDialog="closeDialog">
             <span>购买失败！</span>
-        </myDialog>
+        </Dialog>
     </div>
 </template>
 <script>
-import myDialog from "./dialog"
 export default {
     props:{
         isShowCheckOrder:{
@@ -25,9 +24,6 @@ export default {
             type:[Number,String],
         }
 
-    },
-    components:{
-        myDialog,
     },
     data(){
         return{

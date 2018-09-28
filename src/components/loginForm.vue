@@ -26,23 +26,25 @@ export default {
     };
   },
   methods: {
-    onsubmit() {
+    onsubmit(e) {
+      e.preventDefault();
       if (
         this.nameError.status &&
         this.passError.status &&
         this.username !== "" &&
         this.password !== ""
       ) {
-        this.$http.get("api/login").then(
+        this.$http.get("/api/login").then(
           res => {
             this.$emit("has-log", res.data.data);
-            this.isSubmmit = true;
+            this.isSubmmit = false;
           },
           err => console.log(err)
         );
       } else {
-        this.isSubmmit = false;
+        this.isSubmmit = true;
       }
+      return false;
     }
   },
   computed: {

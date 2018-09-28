@@ -1,13 +1,13 @@
 <template>
     <div class="sales-board">
         <div class="sales-board-intro">
-            <h2>数据预测</h2>
+            <h2>流量分析</h2>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla, natus fuga? Eius eveniet similique hic!</p>
             <div class="sales-board-form">
                 <div class="sales-board-line">
                     <div class="sales-board-line-left fl">购买数量  ：  </div> 
                     <div class="sales-board-line-right fl">
-                       <v-count :max="maxNum" :min="minNum" @on-change="onParamChange('buyNumber',$event)"></v-count>
+                       <v-count :max="maxNum" :min="minNum" @on-change="onParamChange('buyNum',$event)"></v-count>
                     </div>                
                 </div>
                 <div class="sales-board-line">
@@ -29,9 +29,15 @@
                     </div>
                 </div>
                 <div class="sales-board-line">
-                    <div class="sales-board-line-left fl">总价  ：  </div> 
+                    <div class="sales-board-line-left fl">单价  ：  </div> 
                     <div class="sales-board-line-right">
                         {{price}}
+                    </div>            
+                </div>
+                <div class="sales-board-line">
+                    <div class="sales-board-line-left fl">总价  ：  </div> 
+                    <div class="sales-board-line-right">
+                        {{totalPrice}}
                     </div>            
                 </div>
                 <button @click="showPayDialog">立即购买</button>
@@ -56,7 +62,7 @@
                     <td>{{buyType.label}}</td>
                     <td>{{buyTime.label}}</td>
                     <td><span v-for="(item) in buyVersion" :key="item.label">{{item.label}}</span></td>
-                    <td>{{price}}</td>
+                    <td>{{totalPrice}}</td>
                 </tr>
             </table>
             <bankChooser @chooseBank="onParamChange('bank',$event)">
@@ -81,9 +87,9 @@ export default {
     components:{
         VSelect,VCount,VMulChooser,myDialog,bankChooser,checkOrder
     },
-    computed:{
-        price(){
-            return  this.$store.getters.getPrice;
+    watch:{
+        buyNum(val){
+            this.totalPrice = this.buyNum * this.price;
         }
     },
     mounted(){
@@ -92,6 +98,7 @@ export default {
         this.buyTime = this.periodList[0];
         this.buyVersion = [this.versionList[0]];
         this.$store.dispatch('fetchPrice',this.price);
+        this.price = this.$store.getters.getPrice;
         // this.getPrice();
     },
     methods:{
@@ -190,6 +197,7 @@ export default {
             buyVersion:[],
             maxNum:20,
             minNum:1,
+            totalPrice:0,
             buyTypes: [
                 {
                     label: '客户版',

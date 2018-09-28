@@ -32,7 +32,7 @@ export default {
         },
         invTime:{
             type:String,
-            default:'1000'
+            default:'3000'
         }
     },
     data(){

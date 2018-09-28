@@ -27,17 +27,20 @@ export default {
         }
     },
     methods:{
-        onsubmit(){
+        onsubmit(e){
+            e.preventDefault();
             if(this.nameError.status && this.passError.status && this.username !== '' && this.password !== ''){
-                this.$http.get('api/login')
+                this.$http.get('/api/login')
                 .then((res)=>{
+                    console.log(res.data.data);
                     this.$emit("has-log",res.data.data);
+                    this.isSubmmit = false;
                 },err => console.log(err));
             }else{
-                this.isSubmmit = false;
                 console.log('false')
                 this.isSubmmit = true;
             }
+            return false;
         }
     },
     computed:{

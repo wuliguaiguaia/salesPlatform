@@ -8,7 +8,7 @@
           <div class="head-nav">
             <ul class="nav-list list-inline">
                 <li v-if="username"  v-text="username"></li>
-                <li v-if="username" @click="quit">退出</li>
+                <li v-if="username"  @click="quit">退出</li>
                 <li v-if="!username" @click="showDialog('login')">登录</li>
                 <li v-if="!username" @click="showDialog('reg')"  >注册</li>
                 <li @click="showDialog('about')">关于</li> 
@@ -26,32 +26,24 @@
   </div>
 
   <!--  -->
-    <my-dialog :isShow="isShow.login" dialogName="登录"  @oncloseDialog="closeDialog('login')"  >
-        <login-form  @oncloseDialog="closeDialog('login')" @has-log="onsuccessLog"></login-form>
-    </my-dialog>
+    <Dialog :isShow="isShow.login" dialogName="登录"  @oncloseDialog="closeDialog('login')"  >
+        <LoginForm  @oncloseDialog="closeDialog('login')" @has-log="onsuccessLog"></LoginForm>
+    </Dialog>
 
   <!--  -->
-  <my-dialog :isShow="isShow.reg"  dialogName="注册"  @oncloseDialog="closeDialog('reg')" >
-      <reg-form  @oncloseDialog="closeDialog('reg')"></reg-form>
-  </my-dialog>
+  <Dialog :isShow="isShow.reg"  dialogName="注册"  @oncloseDialog="closeDialog('reg')" >
+      <RegForm  @oncloseDialog="closeDialog('reg')" @has-log="showDialog('login')"></RegForm>
+  </Dialog>
   
   <!--  -->
-  <my-dialog :isShow="isShow.about"   dialogName="关于"  @oncloseDialog="closeDialog('about')" >
+  <Dialog :isShow="isShow.about"   dialogName="关于"  @oncloseDialog="closeDialog('about')" >
       <p>本报告在调研数据的基础上，采用定性与定量相结合的方式深入分析了专车市场发展的驱动因素与阻碍因素、专车市场背后的产业格局、专车企业的竞争格局、用户对专车市场的依赖程度、专车对其他交通工具运力的补充效应等，通过这五个章节的研究反映专车市场的发展态势和面临的问题。报告力求客观、深入、准确地反映中国专车市场发展情况，为政府、企事业单位和社会各界提供决策依据。 </p>
-  </my-dialog>
+  </Dialog>
 </div>
 </template>
 
 <script>
-import loginForm from "./loginForm";
-import regForm from "./regForm";
-import Dialog from "./dialog";
 export default {
-    components:{
-        myDialog:Dialog,
-        loginForm,
-        regForm,
-    },
     data () {
         return {
             username:'',
@@ -70,12 +62,17 @@ export default {
             this.isShow[attr] = false;
         },
         showDialog(attr){
-            
+            this.isShow.login = false;
+            this.isShow.reg = false;
+            this.isShow.about = false;
             this.isShow[attr] = true;
         },
         onsuccessLog(data){
             this.username = data.name;
+            console.log(data);
+            console.log('das');
             this.closeDialog('login');
+            this.closeDialog('regin');
         },
         resetComponent(e){
             if (!e.target.classList.contains('select-default')){
